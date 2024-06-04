@@ -13,9 +13,9 @@ jobs:
   # Reads `./packages` for package references to put
   # into a CRAN-like repository hosted on GitHub pages
   deploy-cran-repo:
-    uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
     env:
-      LIBARROW_BINARY: "linux-openssl-3.0"
+      LIBARROW_BINARY: linux-openssl-3.0
+    uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
     with:
       packages: cran::arrow
     permissions:
