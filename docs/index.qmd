@@ -16,6 +16,7 @@ format:
       dark: darkly
 webr: 
   packages: ['ggplot2', 'dplyr', 'arrow']
+  channel-type: "automatic"
 filters: 
   - webr
 ---
