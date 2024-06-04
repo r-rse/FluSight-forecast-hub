@@ -13,17 +13,18 @@ env:
 name: Build and deploy wasm R package repository
 
 jobs:
-  steps:
-    - name: Install libarrow
-      run: |
-        sudo apt-get update
+  deploy-cran-repo:
+    steps:
+      - name: Install libarrow
+        run: |
+          sudo apt-get update
     # Reads `./packages` for package references to put
     # into a CRAN-like repository hosted on GitHub pages
-     - deploy-cran-repo:
+      - name: build web assembly packages
         uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
         with:
           packages: cran::arrow
-        permissions:
+          permissions:
           # To download GitHub Packages within action
           repository-projects: read
           # For publishing to pages environment
