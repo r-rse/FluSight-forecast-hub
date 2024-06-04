@@ -15,7 +15,7 @@ jobs:
   deploy-cran-repo:
     uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
     with:
-      packages: any::arrow
+      packages: cran::arrow
     permissions:
       # To download GitHub Packages within action
       repository-projects: read
