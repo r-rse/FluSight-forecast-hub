@@ -15,8 +15,8 @@ name: Build and deploy wasm R package repository
 jobs:
   steps:
     - name: Install libarrow
-        run: |
-          sudo apt-get update
+      run: |
+        sudo apt-get update
     # Reads `./packages` for package references to put
     # into a CRAN-like repository hosted on GitHub pages
      - deploy-cran-repo:
