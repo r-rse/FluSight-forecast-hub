@@ -7,14 +7,15 @@ on:
   # Or when triggered manually
   workflow_dispatch: {}
 
+env:
+  LIBARROW_BINARY: linux-openssl-3.0
+
 name: Build and deploy wasm R package repository
 
 jobs:
   # Reads `./packages` for package references to put
   # into a CRAN-like repository hosted on GitHub pages
   deploy-cran-repo:
-    env:
-      LIBARROW_BINARY: linux-openssl-3.0
     uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
     with:
       packages: cran::arrow
