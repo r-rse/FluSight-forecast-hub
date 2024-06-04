@@ -8,20 +8,24 @@ on:
   workflow_dispatch: {}
 
 env:
-  LIBARROW_BINARY: linux-openssl-3.0
+  LIBARROW_BINARY: false
 
 name: Build and deploy wasm R package repository
 
 jobs:
-  # Reads `./packages` for package references to put
-  # into a CRAN-like repository hosted on GitHub pages
-  deploy-cran-repo:
-    uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
-    with:
-      packages: cran::arrow
-    permissions:
-      # To download GitHub Packages within action
-      repository-projects: read
-      # For publishing to pages environment
-      pages: write
-      id-token: write
+  steps:
+    - name: Install libarrow
+        run: |
+          sudo apt-get update
+    # Reads `./packages` for package references to put
+    # into a CRAN-like repository hosted on GitHub pages
+     - deploy-cran-repo:
+        uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
+        with:
+          packages: cran::arrow
+        permissions:
+          # To download GitHub Packages within action
+          repository-projects: read
+          # For publishing to pages environment
+          pages: write
+          id-token: write
