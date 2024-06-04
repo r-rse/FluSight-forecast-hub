@@ -1,0 +1,42 @@
+---
+title: "webR/WebAssembly hubverse dataviz Demo"
+engine: knitr
+author: 'Anna K'
+date: 'today'
+format: 
+  html:
+    toc: true
+    toc-title: "webR/WebAssembly hubverse dataviz Demo"
+    code-links:
+      - text: GitHub
+        icon: github
+        href: https://github.com/r-rse/FluSight-forecast-hub
+    theme: 
+      light: cosmo
+      dark: darkly
+webr: 
+  packages: ['ggplot2', 'dplyr', 'arrow']
+filters: 
+  - webr
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{web-r}
+mtcars |> 
+  filter(mpg > 30)
+```
+
+You can add options to executable code like this
+
+```{web-r}
+arrow::open_csv_dataset("model-output")
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
