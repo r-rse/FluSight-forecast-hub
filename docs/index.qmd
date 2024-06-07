@@ -66,3 +66,36 @@ library(dplyr)
 tbl(con, "model_output") |>
   filter(output_type == "quantile")
 ```
+
+
+
+## Hide all setup
+
+We can use `#| context: setup` to execute hidden setup code on load, e.g. below I'm download the database file creating a connection to it and assigning the `model_output` table to an object called `hub_con`.
+
+This is then available to run visible interactive queries against.
+
+
+```{webr-r}
+#| context: setup
+data_dir <- tempdir()
+db_file <- file.path(data_dir, "cdcepi-flusight-forecast-hub.db")
+
+system.time(
+download.file(
+  "https://raw.githubusercontent.com/reichlab/duck-hub/main/data/cdcepi-flusight-forecast-hub.db", 
+  destfile = db_file)
+)
+
+library("duckdb")
+con <- dbConnect(duckdb::duckdb(), db_file)
+
+library(dplyr)
+hub_con <- tbl(con, "model_output") 
+```
+
+
+```{webr-r}
+hub_con |>
+  filter(output_type == "quantile")
+```
