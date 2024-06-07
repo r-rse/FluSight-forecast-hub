@@ -15,29 +15,54 @@ format:
       light: cosmo
       dark: darkly
 webr: 
-  packages: ['ggplot2', 'dplyr', 'arrow']
+  packages: ['ggplot2', 'dplyr', 'duckdb', 'dbplyr']
   channel-type: "automatic"
 filters: 
   - webr
 ---
 
-## Quarto
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+## Example of Running Code
 
-## Running Code
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{web-r}
+```{webr-r}
 mtcars |> 
   filter(mpg > 30)
 ```
 
-You can add options to executable code like this
-
-```{web-r}
-arrow::open_csv_dataset("model-output")
+```{webr-r}
+mtcars |> 
+  ggplot(aes(x = mpg, y = wt)) +
+  geom_point()
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+# Hubverse Data
+
+## Download duckdb database
+
+```{webr-r}
+data_dir <- tempdir()
+db_file <- file.path(data_dir, "cdcepi-flusight-forecast-hub.db")
+
+system.time(
+download.file(
+  "https://raw.githubusercontent.com/reichlab/duck-hub/main/data/cdcepi-flusight-forecast-hub.db", 
+  destfile = db_file)
+)
+```
+
+
+## Connect to duckdb database
+
+```{webr-r}
+library("duckdb")
+con <- dbConnect(duckdb::duckdb(), db_file)
+```
+
+## Filter data
+
+```{webr-r}
+library(dplyr)
+tbl(con, "model_output") |>
+  filter(output_type == "quantile")
+```
